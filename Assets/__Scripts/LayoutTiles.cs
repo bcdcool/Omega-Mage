@@ -110,6 +110,7 @@ public class LayoutTiles : MonoBehaviour
         // Get the texture names for the floors and walls from <room> attributes
         string floorTexStr = room.att("floor");
         string wallTexStr = room.att("wall");
+        string pitTexStr = room.att("pit");
         // Split the room into rows of tiles based on carriage returns in the
         // Rooms.xml file
         string[] roomRows = room.text.Split('\n');
@@ -151,6 +152,9 @@ public class LayoutTiles : MonoBehaviour
                     case "|": // default wall
                         height = 1;
                         break;
+                    case "O": // pit
+                        height = -1;
+                        break;
                     default:
                         // Anything else will be interpreted as floor
                         type = ".";
@@ -165,6 +169,10 @@ public class LayoutTiles : MonoBehaviour
                 else if (type == "|")
                 {
                     tileTexStr = wallTexStr;
+                }
+                else if (type == "O")
+                {
+                    tileTexStr = pitTexStr;
                 }
                 // Instantiate a new TilePrefab
                 go = Instantiate(tilePrefab) as GameObject;
