@@ -11,6 +11,8 @@ public class AirGroundSpell : PT_MonoBehaviour
                             // Use this for initialization
     public float damagePerSecond = 10;
 
+    public float speedUp = 1.25f;
+
     void Start()
     {
         timeStart = Time.time;
@@ -56,11 +58,23 @@ public class AirGroundSpell : PT_MonoBehaviour
     {
         // Actually damage the other
         // Get a reference to the EnemyBug script component of the other
-        EnemyBug recipient = other.GetComponent<EnemyBug>();
+        Mage recipient = other.GetComponent<Mage>();
         // If there is an EnemyBug component, dmage it with fire
         if (recipient != null)
         {
-            //recipient.Damage(damagePerSecond, ElementType.fire, true);
+            recipient.speed *= speedUp;  
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        // Actually damage the other
+        // Get a reference to the EnemyBug script component of the other
+        Mage recipient = other.GetComponent<Mage>();
+        // If there is an EnemyBug component, dmage it with fire
+        if (recipient != null)
+        {
+            recipient.speed = recipient.saveSpeed;
         }
     }
 }

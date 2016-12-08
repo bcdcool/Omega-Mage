@@ -11,6 +11,8 @@ public class WaterGroundSpell : PT_MonoBehaviour
                             // Use this for initialization
     public float damagePerSecond = 10;
 
+    public float slow = 0.25f; 
+
     void Start()
     {
         timeStart = Time.time;
@@ -60,7 +62,19 @@ public class WaterGroundSpell : PT_MonoBehaviour
         // If there is an EnemyBug component, dmage it with fire
         if (recipient != null)
         {
-            //recipient.Damage(damagePerSecond, ElementType.earth, true);
+            recipient.slow(slow);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        // Actually damage the other
+        // Get a reference to the EnemyBug script component of the other
+        EnemyBug recipient = other.GetComponent<EnemyBug>();
+        // If there is an EnemyBug component, dmage it with fire
+        if (recipient != null)
+        {
+            recipient.speed = recipient.saveSpeed;
         }
     }
 }

@@ -110,6 +110,8 @@ public class Mage : PT_MonoBehaviour
 
     public List<Element> selectedElements = new List<Element>();
 
+    public float saveSpeed;
+
     void Awake()
     {
         S = this; // Set the Mage Singleton
@@ -127,6 +129,8 @@ public class Mage : PT_MonoBehaviour
         // ^ Create an empty GameObject named "Spell Anchor". When you create a
         // new GameObject this way, it's at P:[0,0,0] R:[0,0,0] S:[1,1,1]
         spellAnchor = saGO.transform; // Get its transform
+
+        saveSpeed = speed; 
     }
 
     void Update()

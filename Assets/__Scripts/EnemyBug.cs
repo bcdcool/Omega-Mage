@@ -19,6 +19,7 @@ public class EnemyBug : PT_MonoBehaviour, Enemy
     public string roomXMLString;
 
     public float speed = 0.5f;
+    public float saveSpeed; 
     public float health = 10;
     public float damageScale = 0.8f;
     public float damageScaleDuration = 0.25f;
@@ -39,6 +40,7 @@ public class EnemyBug : PT_MonoBehaviour, Enemy
         characterTrans = transform.Find("CharacterTrans");
         _maxHealth = health; // Used to put a top cap on healing
         ResetDamageDict();
+        saveSpeed = speed;
     }
 
     // Resets the values for the damageDict
@@ -136,6 +138,11 @@ public class EnemyBug : PT_MonoBehaviour, Enemy
                 damageDict[eT] += amt;
                 break;
         }
+    }
+
+    public void slow(float speedModifier)
+    {
+        speed = saveSpeed * speedModifier; 
     }
 
     // LateUpdate() is automatically called by Unity every frame. Once all the
