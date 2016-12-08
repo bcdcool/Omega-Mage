@@ -68,6 +68,9 @@ public class Mage : PT_MonoBehaviour
     public float lineMaxLength = 8f;
 
     public GameObject fireGroundSpellPrefab;
+    public GameObject earthGroundSpellPrefab;
+    public GameObject waterGroundSpellPrefab;
+    public GameObject airGroundSpellPrefab;
 
     public float health = 4; // Total mage health
     public float damageTime = -100;
@@ -142,6 +145,7 @@ public class Mage : PT_MonoBehaviour
         // An example of using < to return a bool value
         bool inActiveArea = (float)Input.mousePosition.x / Screen.width <
         activeScreenWidth;
+
         // This is handled as an if statement instead of switch because a tap
         // can sometimes happen within a single frame
         if (mPhase == MPhase.idle)
@@ -155,13 +159,6 @@ public class Mage : PT_MonoBehaviour
                 { // Something was hit!
                     MouseDown(); // Call MouseDown()
                     mPhase = MPhase.down; // and set the mPhase
-                }
-
-                // However, drag will immediately start after mTapTime if there
-                // are no elements selected.
-                if (selectedElements.Count == 0)
-                {
-                    mPhase = MPhase.drag;
                 }
             }
         }
@@ -181,6 +178,13 @@ public class Mage : PT_MonoBehaviour
                 float dragDist = (lastMouseInfo.screenLoc -
                 mouseInfos[0].screenLoc).magnitude;
                 if (dragDist >= mDragDist)
+                {
+                    mPhase = MPhase.drag;
+                }
+
+                // However, drag will immediately start after mTapTime if there
+                // are no elements selected.
+                if (selectedElements.Count == 0)
                 {
                     mPhase = MPhase.drag;
                 }
@@ -341,6 +345,45 @@ public class Mage : PT_MonoBehaviour
                     fireGO = Instantiate(fireGroundSpellPrefab) as GameObject;
                     fireGO.transform.parent = spellAnchor;
                     fireGO.transform.position = pt;
+                }
+                break;
+            case ElementType.earth:
+                GameObject earthGO;
+                int i = 0;
+                int skip = 2;
+                 
+                foreach (Vector3 pt in linePts)
+                { // For each Vector3 in linePts...
+                    i++; 
+
+                    if(i % skip == 0) {
+                        // ...create an instance of earthGroundSpellPrefab
+                        earthGO = Instantiate(earthGroundSpellPrefab) as GameObject;
+                        earthGO.transform.parent = spellAnchor;
+                        earthGO.transform.position = pt;
+                    }   
+                }
+                break;
+            case ElementType.water:
+                GameObject waterGO;
+
+                foreach (Vector3 pt in linePts)
+                {  // For each Vector3 in linePts...
+                   // ...create an instance of waterGroundSpellPrefab
+                    waterGO = Instantiate(waterGroundSpellPrefab) as GameObject;
+                    waterGO.transform.parent = spellAnchor;
+                    waterGO.transform.position = pt;
+                }
+                break;
+            case ElementType.air:
+                GameObject airGO;
+
+                foreach (Vector3 pt in linePts)
+                {  // For each Vector3 in linePts...
+                   // ...create an instance of airGroundSpellPrefab
+                    airGO = Instantiate(airGroundSpellPrefab) as GameObject;
+                    airGO.transform.parent = spellAnchor;
+                    airGO.transform.position = pt;
                 }
                 break;
                 //TODO: Add other elements types later
