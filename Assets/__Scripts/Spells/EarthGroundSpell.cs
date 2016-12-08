@@ -56,11 +56,22 @@ public class EarthGroundSpell : PT_MonoBehaviour
     {
         // Actually damage the other
         // Get a reference to the EnemyBug script component of the other
-        EnemyBug recipient = other.GetComponent<EnemyBug>();
+        EnemySpiker recipient = other.GetComponent<EnemySpiker>();
         // If there is an EnemyBug component, dmage it with fire
         if (recipient != null)
         {
             //recipient.Damage(damagePerSecond, ElementType.earth, true);
+            //recipient.moveDir *= -1;
+
+            //Destroy(gameObject);
+            // Make sure that the ground tile is in the direction we're moving.
+            // A dot product will help us with this (see the Useful Concepts
+            // Reference).
+            float dot = Vector3.Dot(recipient.moveDir, gameObject.transform.position - recipient.pos);
+            if (dot > 0)
+            { // If Spiker is moving towards the block it hit
+                recipient.moveDir *= -1; // Reverse direction
+            }
         }
     }
 }

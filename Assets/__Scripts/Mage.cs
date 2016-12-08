@@ -354,7 +354,7 @@ public class Mage : PT_MonoBehaviour
             case ElementType.earth:
                 GameObject earthGO;
                 int i = 0;
-                int skip = 2;
+                int skip = 4;
                  
                 foreach (Vector3 pt in linePts)
                 { // For each Vector3 in linePts...
